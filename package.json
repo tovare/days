@@ -1,0 +1,19 @@
+{
+  "name": "days",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "parcel serve src/index.html --no-cache "
+  },
+  "author": "Tov Are Jacobsen",
+  "license": "MIT",
+  "dependencies": {
+    "hybrids": "^4.3.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.1.0",
+    "parcel": "^2.0.0-nightly.506",
+    "postcss": "^8.2.2",
+    "tailwindcss": "^2.0.2"
+  }
+}
