@@ -14,7 +14,10 @@ module.exports = {
     }
   },
   variants: {
-    extend: {},
+    backgroundColor: ["active","hover"],
+    boxShadow: ["active","hover"],
+    extend: {
+    },
   },
   plugins: [],
 };
