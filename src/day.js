@@ -168,7 +168,11 @@ const tableRows = function (d) {
     ${d.map(function (row) {
       return html`<tr>
         ${row.map(function ({ id, day, date }) {
-          return html`<td><t-day day=${day}></t-day></td>`;
+          return html`
+          <td>
+              
+              <t-day day=${day}></t-day>
+        </td>`;
         })}
       </tr>`;
     })}
