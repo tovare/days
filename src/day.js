@@ -26,9 +26,6 @@ function createDays() {
 // Indexdb implementation
 // =======================================
 
-// Let us open our database
-//var dbrequest = indexedDB.open("days", 1);
-
 async function OpenDaysDatabase() {
   const db = await openDB("days", undefined, {
     upgrade(db, oldVersion, newVersion, transaction) {
@@ -63,7 +60,7 @@ async function OpenDaysDatabase() {
   return groupedByDay;
 }
 
-var values = OpenDaysDatabase();
+//var values = OpenDaysDatabase();
 
 function sortDays(allDays) {
   allDays = allDays.sort(function (a, b) {
@@ -86,7 +83,15 @@ const DayElement = {
   selected: false,
   day: 0,
   render: ({ selected, day }) => html`
+    <link
+      href="//fonts.googleapis.com/css?family=Orbitron&display=swap"
+      rel="stylesheet"
+      type="text/css"
+    />
     <style type="text/css">
+      button {
+        font-family: "Orbitron", sans-serif;
+      }
       .btnselected {
         box-shadow: 3px 4px 4px 0px #8a2a21;
         background-image: linear-gradient(#c62d1f, #f24437);
@@ -162,21 +167,31 @@ const tableRows = function (d) {
   return html`
     ${d.map(function (row) {
       return html`<tr>
-          ${row.map( 
-              function({id,day}){
-                  return html`<td><t-day day=${day}></t-day></td>`
-              }
-          )}
-    </tr>`;
+        ${row.map(function ({ id, day, date }) {
+          return html`<td><t-day day=${day}></t-day></td>`;
+        })}
+      </tr>`;
     })}
   `;
 };
-
 
 const YearElement = {
   year: 2021,
   d: () => OpenDaysDatabase(),
   render: ({ d }) => html`
+      <link
+      href="//fonts.googleapis.com/css?family=Orbitron&display=swap"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style type="text/css">
+        th,td {
+            font-family: "Orbitron", sans-serif;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 2px;
+        }
+    </style>
     <table>
       <thead>
         <th>Jan</th>
