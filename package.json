@@ -8,7 +8,8 @@
   "author": "Tov Are Jacobsen",
   "license": "MIT",
   "dependencies": {
-    "hybrids": "^4.3.3"
+    "hybrids": "^4.3.3",
+    "idb": "^6.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.1.0",

@@ -22,7 +22,7 @@ const CompX1 = {
   render: ({d}) => html`
     <h1>List</h1>
     <ol>
-      ${mylist.map(({ id, t }) => html`<li>item: ${t}</li>`.key(id))}
+      ${d.map(({ t }) => html`<li>item: ${t}</li>`)}
     </ol>
   `,
 };
