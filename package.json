@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "parcel serve src/index.html --no-cache "
+    "test": "parcel serve src/index.html --no-cache ",
+    "build": "parcel build src/index.html src/day.js --no-cache "
   },
   "author": "Tov Are Jacobsen",
   "license": "MIT",

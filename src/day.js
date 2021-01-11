@@ -1,5 +1,6 @@
 import { define, html, render } from "hybrids";
 import { openDB, deleteDB, wrap, unwrap } from "idb";
+import { stringify } from "postcss";
 
 // createDays populates 12 columns
 function createDays() {
@@ -9,7 +10,7 @@ function createDays() {
     days = new Date(2021, i, 0).getDate(); //  numnber of days in the month.
     for (let j = 1; j <= 31; j++) {
       allDays.push({
-        id: String(i).padStart(2, "0") + String(j).padStart(2, "0"),
+        id: "M"+String(i).padStart(2, "0")+"D"+ String(j).padStart(2, "0"),
         date: new Date(2020, i - 1, j),
         month: i,
         day: j,
@@ -77,10 +78,45 @@ function sortDays(allDays) {
 
 function toggleDay(host, event) {
   host.selected = !host.selected;
+  console.log("id of host: " + host.id);
+  console.log("day of host: " + host.day);
+  console.log("selected: " + host.selected);
+
+  async function newFunction() {
+    const db = await openDB("days")
+      .catch(function (err) {
+        console.log("Error: " + err);
+      })
+      .then(
+        function (db) {
+          console.log("database:"+ db);
+          const value = db.get("days", host.id)
+            .then(function (value) {
+                console.log("value object:"+ JSON.stringify(value))
+                value.selected = host.selected
+                db.put("days", value).catch(
+                    function(err) {
+                        console.log("Saving: "+err)
+                    }
+                )
+                console.log("Updated " + host.id + " to " + host.selected);
+            }).catch(
+              function (err) {
+                  console.log("Error during get: "+err)
+              }
+            )
+          }
+      )
+  }
+  newFunction();
+  //
+  //
+  //
 }
 
 const DayElement = {
   selected: false,
+  id: "",
   day: 0,
   render: ({ selected, day }) => html`
     <link
@@ -167,12 +203,10 @@ const tableRows = function (d) {
   return html`
     ${d.map(function (row) {
       return html`<tr>
-        ${row.map(function ({ id, day, date }) {
-          return html`
-          <td>
-              
-              <t-day day=${day}></t-day>
-        </td>`;
+        ${row.map(function ({ id, day, date, visible,selected }) {
+          return html` <td>
+            ${visible && html`<t-day id="${id}" day=${day} selected=${selected}></t-day>`}
+          </td>`;
         })}
       </tr>`;
     })}
@@ -183,18 +217,19 @@ const YearElement = {
   year: 2021,
   d: () => OpenDaysDatabase(),
   render: ({ d }) => html`
-      <link
+    <link
       href="//fonts.googleapis.com/css?family=Orbitron&display=swap"
       rel="stylesheet"
       type="text/css"
     />
     <style type="text/css">
-        th,td {
-            font-family: "Orbitron", sans-serif;
-            padding-left: 5px;
-            padding-right: 5px;
-            padding-top: 2px;
-        }
+      th,
+      td {
+        font-family: "Orbitron", sans-serif;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top: 2px;
+      }
     </style>
     <table>
       <thead>
